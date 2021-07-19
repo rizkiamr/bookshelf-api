@@ -143,30 +143,30 @@ const editBookByBookIdHandler = (request, h) => {
     reading,
   } = request.payload;
 
+  if (name === undefined) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. Mohon isi nama buku',
+    });
+    response.code(400);
+    return response;
+  }
+
+  if (readPage > pageCount) {
+    const response = h.response({
+      status: 'fail',
+      // eslint-disable-next-line max-len
+      message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
+    });
+    response.code(400);
+    return response;
+  }
+
   const updatedAt = new Date().toISOString();
 
   const index = books.findIndex((book) => book.id === id);
 
   if (index !== -1) {
-    if (name === undefined) {
-      const response = h.response({
-        status: 'fail',
-        message: 'Gagal memperbarui buku. Mohon isi nama buku',
-      });
-      response.code(400);
-      return response;
-    }
-
-    if (readPage > pageCount) {
-      const response = h.response({
-        status: 'fail',
-        // eslint-disable-next-line max-len
-        message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
-      });
-      response.code(400);
-      return response;
-    }
-
     books[index] = {
       ...books[index],
       name,
