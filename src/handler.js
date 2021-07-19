@@ -57,7 +57,7 @@ const addBookHandler = (request, h) => {
       status: 'success',
       message: 'Buku berhasil ditambahkan',
       data: {
-        bookId: id,
+        bookId: bookId,
       },
     });
     response.code(201);
@@ -83,7 +83,7 @@ const getBookByBookIdHandler = (request, h) => {
 
   const book = books.filter((n) => n.bookId === bookId)[0];
 
-  if (note !== undefined) {
+  if (book !== undefined) {
     return {
       status: 'success',
       data: {
